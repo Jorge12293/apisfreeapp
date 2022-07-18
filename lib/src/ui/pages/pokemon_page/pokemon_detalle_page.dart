@@ -48,8 +48,8 @@ class _PokemonDetallePageState extends State<PokemonDetallePage> {
   void loadDataPokemon() async {
     loadData = true;
     setState(() {});
-   // respPokemon = await pokemonService.pokemonDataServices(widget.urlPokemon);
-    respPokemon = await pokemonService.pokemonDataNameServices(widget.namePokemon);
+    respPokemon =
+        await pokemonService.pokemonDataNameServices(widget.namePokemon);
     if (respPokemon != null) {
       respPokemonSpecies =
           await pokemonService.pokemonDataSpecieServices(respPokemon!.id);
@@ -65,8 +65,8 @@ class _PokemonDetallePageState extends State<PokemonDetallePage> {
     loadData = false;
     setState(() {});
 
-    if (respPokemonSpecies != null  && respPokemonEvol!=null) {
-        loadConatinerCardsPokemons();
+    if (respPokemonSpecies != null && respPokemonEvol != null) {
+      loadConatinerCardsPokemons();
     }
   }
 
@@ -152,8 +152,7 @@ class _PokemonDetallePageState extends State<PokemonDetallePage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => PokemonDetallePage(
-                            urlPokemon: '',
-                            namePokemon: respPokemonAux.name)),
+                            urlPokemon: '', namePokemon: respPokemonAux.name)),
                   );
                 },
                 child: Padding(
@@ -235,6 +234,33 @@ class _PokemonDetallePageState extends State<PokemonDetallePage> {
     );
   }
 
+  Widget textInformation(String textoParrajo) {
+    return Card(
+        elevation: 10,
+        color: Colors.redAccent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                const Text('INFORMACION',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
+                (respPokemonSpecies!.isLegendary == true)
+                    ? const Text('LEGENDARIO',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.brown))
+                    : Container(),
+                (respPokemonSpecies!.isMythical == true)
+                    ? const Text('MITICO',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.brown))
+                    : Container(),
+     
+                Text('Experiencia: ${respPokemon!.baseExperience.toString()}',style: const TextStyle(color: Colors.black)),  
+                Text('Altura: ${respPokemon!.height.toString()} m',style: const TextStyle(color: Colors.white)),
+                Text('Peso: ${respPokemon!.weight.toString()} g',style: const TextStyle(color: Colors.white)),
+
+              ],
+            )));
+  }
+
   Widget textParrafo(String textoParrajo) {
     return Card(
         elevation: 25,
@@ -243,7 +269,7 @@ class _PokemonDetallePageState extends State<PokemonDetallePage> {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.only(bottom:20,left: 20,right: 20),
             child: Column(
               children: [
                 const SizedBox(height: 10),
@@ -295,12 +321,15 @@ class _PokemonDetallePageState extends State<PokemonDetallePage> {
         headerParrafo(widget.namePokemon),
         barraColorPokemon(colorPokemon),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             cardPokemon(respPokemon?.sprites.versions.generationV.blackWhite
                     .animated.frontDefault ??
                 'https://assets.pokemon.com/static2/_ui/img/og-default-image.jpeg'),
+            textInformation('hoal')
           ],
         ),
+                  
         barraColorPokemon(colorPokemon),
         textParrafo(textDescription),
         barraColorPokemon(colorPokemon),
