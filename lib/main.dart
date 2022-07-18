@@ -1,3 +1,5 @@
+
+import 'package:apisfreeapp/src/ui/pages/pokemon_page/pokemon_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,11 +12,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+      //initialRoute: 'home',
+      //routes:appRoutes,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home:PokemonPage()
+      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
